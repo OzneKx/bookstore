@@ -14,7 +14,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
