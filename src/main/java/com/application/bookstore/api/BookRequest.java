@@ -1,6 +1,5 @@
 package com.application.bookstore.api;
 
-import com.application.bookstore.domain.enums.Publisher;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -33,5 +32,5 @@ public class BookRequest {
     List<String> languages;
 
     @NotNull
-    Publisher publisher;
+    String publisher;
 }

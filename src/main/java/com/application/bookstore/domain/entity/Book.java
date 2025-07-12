@@ -1,18 +1,17 @@
 package com.application.bookstore.domain.entity;
 
-import com.application.bookstore.domain.enums.Publisher;
+import com.application.bookstore.api.BookRequest;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.GenerationType;
 
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -44,6 +43,15 @@ public class Book {
     @Column(name = "language")
     List<String> languages;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
     Publisher publisher;
+
+    public Book(BookRequest request, Publisher publisher) {
+        this.title = request.getTitle();
+        this.author = request.getAuthor();
+        this.publishYear = request.getPublishYear();
+        this.languages = request.getLanguages();
+        this.publisher = publisher;
+    }
 }
