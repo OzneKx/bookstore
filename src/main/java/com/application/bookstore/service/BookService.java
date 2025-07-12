@@ -3,10 +3,9 @@ package com.application.bookstore.service;
 import com.application.bookstore.api.BookRequest;
 import com.application.bookstore.api.BookResponse;
 import com.application.bookstore.domain.entity.Book;
-import com.application.bookstore.domain.entity.Publisher;
+import com.application.bookstore.domain.enums.Publisher;
 import com.application.bookstore.domain.repository.BookRepository;
 
-import com.application.bookstore.domain.repository.PublisherRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +13,13 @@ import java.util.List;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
-    private final PublisherRepository publisherRepository;
 
-    public BookService(BookRepository bookRepository, PublisherRepository publisherRepository) {
+    public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
-        this.publisherRepository = publisherRepository;
     }
 
     public BookResponse createBook(BookRequest bookRequest) {
-        Publisher publisher = publisherRepository.findByName(bookRequest.getPublisher());
-
-        Book book = new Book(bookRequest, publisher);
+        Book book = new Book(bookRequest);
         return new BookResponse(bookRepository.save(book));
     }
 
@@ -41,15 +36,13 @@ public class BookService {
     }
 
     public BookResponse updateBook(Long id, BookRequest bookRequest) {
-        Publisher publisher = publisherRepository.findByName(bookRequest.getPublisher());
-
         Book existentBook = checkExistentBook(id);
 
         existentBook.setTitle(bookRequest.getTitle());
         existentBook.setAuthor(bookRequest.getAuthor());
         existentBook.setPublishYear(bookRequest.getPublishYear());
         existentBook.setLanguages(bookRequest.getLanguages());
-        existentBook.setPublisher(publisher);
+        existentBook.setPublisher(Publisher.valueOf(bookRequest.getPublisher().toUpperCase()));
 
         return new BookResponse(bookRepository.save(existentBook));
     }
