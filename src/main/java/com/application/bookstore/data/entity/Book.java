@@ -1,8 +1,8 @@
-package com.application.bookstore.domain.entity;
+package com.application.bookstore.data.entity;
 
-import com.application.bookstore.api.BookRequest;
+import com.application.bookstore.dto.BookRequest;
 
-import com.application.bookstore.domain.enums.Publisher;
+import com.application.bookstore.data.enums.Publisher;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;

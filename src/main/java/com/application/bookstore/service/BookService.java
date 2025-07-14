@@ -1,10 +1,7 @@
 package com.application.bookstore.service;
 
-import com.application.bookstore.api.BookRequest;
-import com.application.bookstore.api.BookResponse;
-import com.application.bookstore.domain.entity.Book;
-import com.application.bookstore.domain.enums.Publisher;
-import com.application.bookstore.domain.repository.BookRepository;
+import com.application.bookstore.data.entity.Book;
+import com.application.bookstore.data.repository.BookRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -18,33 +15,28 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public BookResponse createBook(BookRequest bookRequest) {
-        Book book = new Book(bookRequest);
-        return new BookResponse(bookRepository.save(book));
+    public Book createBook(Book book) {
+        return bookRepository.save(book);
     }
 
-    public List<BookResponse> getBooks() {
-        return bookRepository.findAll()
-                .stream()
-                .map(BookResponse::new).toList();
+    public List<Book> getBooks() {
+        return bookRepository.findAll();
     }
 
-    public BookResponse getBooksById(Long id) {
+    public Book getBooksById(Long id) {
+        return checkExistentBook(id);
+    }
+
+    public Book updateBook(Long id, Book updatedBook) {
         Book existentBook = checkExistentBook(id);
 
-        return new BookResponse(existentBook);
-    }
+        existentBook.setTitle(updatedBook.getTitle());
+        existentBook.setAuthor(updatedBook.getAuthor());
+        existentBook.setPublishYear(updatedBook.getPublishYear());
+        existentBook.setLanguages(updatedBook.getLanguages());
+        existentBook.setPublisher(updatedBook.getPublisher());
 
-    public BookResponse updateBook(Long id, BookRequest bookRequest) {
-        Book existentBook = checkExistentBook(id);
-
-        existentBook.setTitle(bookRequest.getTitle());
-        existentBook.setAuthor(bookRequest.getAuthor());
-        existentBook.setPublishYear(bookRequest.getPublishYear());
-        existentBook.setLanguages(bookRequest.getLanguages());
-        existentBook.setPublisher(Publisher.valueOf(bookRequest.getPublisher().toUpperCase()));
-
-        return new BookResponse(bookRepository.save(existentBook));
+        return bookRepository.save(existentBook);
     }
 
     public void deleteBook(Long id) {

@@ -1,4 +1,4 @@
-package com.application.bookstore.domain.enums;
+package com.application.bookstore.data.enums;
 
 public enum Publisher {
     PENGUIN_RANDOM_HOUSE,

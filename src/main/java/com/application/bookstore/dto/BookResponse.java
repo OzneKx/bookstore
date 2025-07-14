@@ -1,7 +1,7 @@
-package com.application.bookstore.api;
+package com.application.bookstore.dto;
 
-import com.application.bookstore.domain.entity.Book;
-import com.application.bookstore.domain.enums.Publisher;
+import com.application.bookstore.data.entity.Book;
+import com.application.bookstore.data.enums.Publisher;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;

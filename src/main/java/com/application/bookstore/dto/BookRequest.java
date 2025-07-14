@@ -1,4 +1,4 @@
-package com.application.bookstore.api;
+package com.application.bookstore.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
