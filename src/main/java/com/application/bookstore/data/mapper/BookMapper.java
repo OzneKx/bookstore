@@ -1,22 +1,33 @@
 package com.application.bookstore.data.mapper;
 
 import com.application.bookstore.data.entity.Book;
-import com.application.bookstore.data.enums.Publisher;
 import com.application.bookstore.dto.BookRequest;
 import com.application.bookstore.dto.BookResponse;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper {
+    @Mappings({
+            @Mapping(source = "title", target = "title"),
+            @Mapping(source = "author", target = "author"),
+            @Mapping(source = "publishYear", target = "publishYear"),
+            @Mapping(source = "languages", target = "languages"),
+            @Mapping(source = "publisher", target = "publisher")
+    })
     Book toEntity(BookRequest request);
-    BookResponse toResponse(Book book);
-    void updateBookFromRequest(BookRequest request, @MappingTarget Book book);
 
-    default Publisher map(String publisher) {
-        if (publisher == null) {
-            return null;
-        }
-        return Publisher.valueOf(publisher);
-    }
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "title", target = "title"),
+            @Mapping(source = "author", target = "author"),
+            @Mapping(source = "publishYear", target = "publishYear"),
+            @Mapping(source = "languages", target = "languages"),
+            @Mapping(source = "publisher", target = "publisher")
+    })
+    BookResponse toResponse(Book book);
+
+    void updateBookFromRequest(BookRequest request, @MappingTarget Book book);
 }
