@@ -1,8 +1,10 @@
 package com.application.bookstore.service;
 
 import com.application.bookstore.data.entity.Book;
+import com.application.bookstore.data.mapper.BookMapper;
 import com.application.bookstore.data.repository.BookRepository;
 
+import com.application.bookstore.dto.BookRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,12 +12,15 @@ import java.util.List;
 @Service
 public class BookService {
     private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
     }
 
-    public Book createBook(Book book) {
+    public Book createBook(BookRequest request) {
+        Book book = bookMapper.toEntity(request);
         return bookRepository.save(book);
     }
 
@@ -27,15 +32,9 @@ public class BookService {
         return checkExistentBook(id);
     }
 
-    public Book updateBook(Long id, Book updatedBook) {
+    public Book updateBook(Long id, BookRequest request) {
         Book existentBook = checkExistentBook(id);
-
-        existentBook.setTitle(updatedBook.getTitle());
-        existentBook.setAuthor(updatedBook.getAuthor());
-        existentBook.setPublishYear(updatedBook.getPublishYear());
-        existentBook.setLanguages(updatedBook.getLanguages());
-        existentBook.setPublisher(updatedBook.getPublisher());
-
+        bookMapper.updateBookFromRequest(request, existentBook);
         return bookRepository.save(existentBook);
     }
 

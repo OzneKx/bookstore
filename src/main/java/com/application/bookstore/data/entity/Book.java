@@ -1,7 +1,5 @@
 package com.application.bookstore.data.entity;
 
-import com.application.bookstore.dto.BookRequest;
-
 import com.application.bookstore.data.enums.Publisher;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -48,12 +46,4 @@ public class Book {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     Publisher publisher;
-
-    public Book(BookRequest request) {
-        this.title = request.getTitle();
-        this.author = request.getAuthor();
-        this.publishYear = request.getPublishYear();
-        this.languages = request.getLanguages();
-        this.publisher = Publisher.valueOf(request.getPublisher());
-    }
 }

@@ -1,7 +1,7 @@
 package com.application.bookstore.controller;
 
 import com.application.bookstore.data.entity.Book;
-import com.application.bookstore.data.enums.Publisher;
+import com.application.bookstore.data.mapper.BookMapper;
 import com.application.bookstore.dto.BookRequest;
 import com.application.bookstore.dto.BookResponse;
 import com.application.bookstore.service.BookService;
@@ -23,17 +23,17 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
+    private final BookMapper bookMapper;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookMapper bookMapper) {
         this.bookService = bookService;
+        this.bookMapper = bookMapper;
     }
 
     @PostMapping
     public ResponseEntity<BookResponse> createBook(@RequestBody BookRequest bookRequest) {
-        Book book = convertToEntity(bookRequest);
-        Book savedBook = bookService.createBook(book);
-
-        BookResponse response = new BookResponse(savedBook);
+        Book createdBook = bookService.createBook(bookRequest);
+        BookResponse response = bookMapper.toResponse(createdBook);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -46,7 +46,7 @@ public class BookController {
         }
 
         List<BookResponse> response = books.stream()
-                .map(BookResponse::new)
+                .map(bookMapper::toResponse)
                 .toList();
 
         return ResponseEntity.ok(response);
@@ -55,14 +55,13 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity<BookResponse> getBookById(@PathVariable Long id) {
         Book book = bookService.getBooksById(id);
-        return ResponseEntity.ok(new BookResponse(book));
+        return ResponseEntity.ok(bookMapper.toResponse(book));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BookResponse> updateBook(@PathVariable Long id, @RequestBody BookRequest bookRequest) {
-        Book book = convertToEntity(bookRequest);
-        Book updatedBook = bookService.updateBook(id, book);
-        return ResponseEntity.ok(new BookResponse(updatedBook));
+        Book updatedBook = bookService.updateBook(id, bookRequest);
+        return ResponseEntity.ok(bookMapper.toResponse(updatedBook));
     }
 
     @DeleteMapping("/{id}")
@@ -70,14 +69,5 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
-
-    private Book convertToEntity(BookRequest bookRequest) {
-        Book book = new Book();
-        book.setTitle(bookRequest.getTitle());
-        book.setAuthor(bookRequest.getAuthor());
-        book.setPublishYear(bookRequest.getPublishYear());
-        book.setLanguages(bookRequest.getLanguages());
-        book.setPublisher(Publisher.valueOf(bookRequest.getPublisher().toUpperCase()));
-        return book;
-    }
 }
+
