@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BookMapper {
     @Mappings({
@@ -28,6 +30,8 @@ public interface BookMapper {
             @Mapping(source = "publisher", target = "publisher")
     })
     BookResponse toResponse(Book book);
+
+    List<BookResponse> toResponseList(List<Book> books);
 
     void updateBookFromRequest(BookRequest request, @MappingTarget Book book);
 }

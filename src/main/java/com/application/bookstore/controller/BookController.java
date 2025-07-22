@@ -46,11 +46,7 @@ public class BookController {
             return ResponseEntity.noContent().build();
         }
 
-        List<BookResponse> response = books.stream()
-                .map(bookMapper::toResponse)
-                .toList();
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(bookMapper.toResponseList(books));
     }
 
     @GetMapping("/{id}")
