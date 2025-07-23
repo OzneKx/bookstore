@@ -1,13 +1,14 @@
-package com.application.bookstore.api;
+package com.application.bookstore.dto;
 
-import com.application.bookstore.domain.enums.Publisher;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
@@ -15,23 +16,30 @@ import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookRequest {
+
     @NotBlank(message = "Title is required")
     @Size(max = 200)
+    @JsonProperty("title")
     String title;
 
     @NotBlank(message = "Author is required")
     @Size(max = 100)
+    @JsonProperty("author")
     String author;
 
-    @Min(1000)
-    @Max(2025)
+    @Min(value = 1000, message = "Publish year must be at least 1000")
+    @Max(value = 2025, message = "Publish year cannot be greater than 2025")
+    @JsonProperty("publishYear")
     int publishYear;
 
-    @Size(min = 1)
+    @NotEmpty(message = "At least one language is required")
+    @JsonProperty("languages")
     List<String> languages;
 
-    @NotNull
-    Publisher publisher;
+    @NotBlank(message = "Publisher is required")
+    @JsonProperty("publisher")
+    String publisher;
 }
