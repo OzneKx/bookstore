@@ -5,6 +5,7 @@ import com.application.bookstore.data.mapper.BookMapper;
 import com.application.bookstore.data.repository.BookRepository;
 
 import com.application.bookstore.dto.BookRequest;
+import com.application.bookstore.exception.BookNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,6 +46,6 @@ public class BookService {
 
     private Book checkExistentBook(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new BookNotFoundException(id));
     }
 }
