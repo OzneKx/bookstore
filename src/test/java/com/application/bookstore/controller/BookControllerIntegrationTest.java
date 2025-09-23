@@ -41,6 +41,8 @@ public class BookControllerIntegrationTest {
         bookRepository.deleteAll();
     }
 
+    // TODO: Make instancio test
+
     @Test
     void testCreateBookSuccess() {
         BookRequest request = new BookRequest();
