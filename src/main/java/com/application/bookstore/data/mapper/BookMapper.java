@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
     @Mappings({
+            @Mapping(target = "id", ignore = true),
             @Mapping(source = "title", target = "title"),
             @Mapping(source = "author", target = "author"),
             @Mapping(source = "publishYear", target = "publishYear"),
