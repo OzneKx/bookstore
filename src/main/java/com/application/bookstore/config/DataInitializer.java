@@ -21,6 +21,16 @@ public class DataInitializer {
 
                 System.out.println("User admin created: (username: admin | password: 123456)");
             }
+
+            if (userRepository.findByUsername("user").isEmpty()) {
+                User user = new User();
+                user.setUsername("user");
+                user.setPassword(encoder.encode("123456"));
+                user.setRole("ROLE_USER");
+                userRepository.save(user);
+
+                System.out.println("User user created: (username: user | password: 123456");
+            }
         };
     }
 }

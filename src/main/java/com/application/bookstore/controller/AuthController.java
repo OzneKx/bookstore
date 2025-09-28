@@ -25,12 +25,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password"))
         );
 
         String jwt = jwtUtil.generateToken((UserDetails) auth.getPrincipal());
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(Map.of("token", jwt));
     }
 }
