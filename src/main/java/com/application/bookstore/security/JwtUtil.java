@@ -15,10 +15,10 @@ public class JwtUtil {
     private static final String SECRET_KEY_PROPERTY = "jwt.secret";
     private static final String JWT_EXPIRATION_PROPERTY = "jwt.expiration";
 
-    @Value("${" + SECRET_KEY_PROPERTY + "}")
+    @Value(SECRET_KEY_PROPERTY)
     private String jwtSecret;
 
-    @Value("${" + JWT_EXPIRATION_PROPERTY + "}")
+    @Value(JWT_EXPIRATION_PROPERTY)
     private long jwtExpiration;
 
     private Key getSigningKey() {
