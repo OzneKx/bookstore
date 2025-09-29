@@ -93,7 +93,7 @@ public class BookControllerIntegrationTest {
     @Test
     void testCreateBookInvalidInput() {
         BookRequest request = new BookRequest();
-        request.setTitle(""); // inválido
+        request.setTitle("");
         request.setAuthor("F. Scott Fitzgerald");
         request.setPublishYear(1925);
         request.setLanguages(List.of("English"));
