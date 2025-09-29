@@ -45,11 +45,11 @@ public class BookControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         bookRepository.deleteAll();
-        adminToken = login("admin");
-        userToken = login("user");
+        adminToken = loginCredentionsForTesting("admin");
+        userToken = loginCredentionsForTesting("user");
     }
 
-    private String login(String username) {
+    private String loginCredentionsForTesting(String username) {
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 "/auth/login",
                 Map.of("username", username, "password", "123456"),

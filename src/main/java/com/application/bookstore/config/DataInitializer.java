@@ -13,24 +13,23 @@ public class DataInitializer {
     CommandLineRunner init(UserRepository userRepository, PasswordEncoder encoder) {
         return args -> {
             if (userRepository.findByUsername("admin").isEmpty()) {
-                User user = new User();
-                user.setUsername("admin");
-                user.setPassword(encoder.encode("123456"));
-                user.setRole("ROLE_ADMIN");
-                userRepository.save(user);
-
-                System.out.println("User admin created: (username: admin | password: 123456)");
+                userRole("admin", encoder, "123456", "ROLE_ADMIN", userRepository);
             }
 
             if (userRepository.findByUsername("user").isEmpty()) {
-                User user = new User();
-                user.setUsername("user");
-                user.setPassword(encoder.encode("123456"));
-                user.setRole("ROLE_USER");
-                userRepository.save(user);
-
-                System.out.println("User user created: (username: user | password: 123456");
+                userRole("user", encoder, "654321", "ROLE_USER", userRepository);
             }
         };
+    }
+
+    private void userRole(String username, PasswordEncoder encoder, String password, String role,
+                          UserRepository userRepository) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(encoder.encode(password));
+        user.setRole(role);
+        userRepository.save(user);
+
+        System.out.println("User created: (username: " + username + " | password: " + password );
     }
 }

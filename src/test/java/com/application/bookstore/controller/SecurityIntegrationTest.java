@@ -33,11 +33,11 @@ public class SecurityIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        userToken = login("user");
-        adminToken = login("admin");
+        userToken = loginCredentialsForTesting("user");
+        adminToken = loginCredentialsForTesting("admin");
     }
 
-    private String login(String username) {
+    private String loginCredentialsForTesting(String username) {
         ResponseEntity<Map> response = restTemplate.postForEntity(
                 "/auth/login",
                 Map.of("username", username, "password", "123456"),

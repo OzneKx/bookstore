@@ -28,15 +28,20 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(auth -> auth
+            .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+                    authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/h2-console/**").permitAll()
                     .anyRequest().authenticated()
             )
-            .exceptionHandling(e -> e
-                    .authenticationEntryPoint((req, res, ex) ->
-                            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
+            .exceptionHandling(exceptionHandlingConfigurer ->
+                    exceptionHandlingConfigurer
+                    .authenticationEntryPoint((httpServletRequest,
+                                               httpServletResponse,
+                                               authenticationException) ->
+                            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
             )
-            .sessionManagement(session -> session
+            .sessionManagement(sessionManagementConfigurer ->
+                    sessionManagementConfigurer
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
 
