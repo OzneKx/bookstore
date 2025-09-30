@@ -17,7 +17,7 @@ public class DataInitializer {
             }
 
             if (userRepository.findByUsername("user").isEmpty()) {
-                createUserWithRole("user", encoder, "654321", "ROLE_USER", userRepository);
+                createUserWithRole("user", encoder, "123456", "ROLE_USER", userRepository);
             }
         };
     }

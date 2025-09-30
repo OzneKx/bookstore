@@ -28,6 +28,6 @@ public class BookResponse {
     @Schema(description = "Languages available for this book", example = "[\"EN\", \"PT\"]")
     private List<String> languages;
 
-    @Schema(description = "Publisher of the book", example = "PENGUIN")
+    @Schema(description = "Publisher of the book", example = "PENGUIN_RANDOM_HOUSE")
     private Publisher publisher;
 }
