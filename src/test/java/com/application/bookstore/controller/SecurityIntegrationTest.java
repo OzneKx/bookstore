@@ -1,5 +1,7 @@
 package com.application.bookstore.controller;
 
+import com.application.bookstore.dto.AuthRequest;
+import com.application.bookstore.dto.AuthResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,19 +40,17 @@ public class SecurityIntegrationTest {
     }
 
     private String loginCredentialsForTesting(String username) {
-        ResponseEntity<Map> response = restTemplate.postForEntity(
+        ResponseEntity<AuthResponse> response = restTemplate.postForEntity(
                 "/auth/login",
-                Map.of("username", username, "password", "123456"),
-                Map.class
+                new AuthRequest(username, "123456"),
+                AuthResponse.class
         );
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody().containsKey("token"));
+        assertNotNull(response.getBody().getToken());
 
-        Object token = response.getBody().get("token");
-        assertNotNull(token);
-        return token.toString();
+        return response.getBody().getToken();
     }
 
     private Long createBook(String token) {
