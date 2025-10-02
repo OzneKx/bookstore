@@ -35,3 +35,4 @@ build/
 ### Other Files ###
 .DS_Store
 data/
+.env

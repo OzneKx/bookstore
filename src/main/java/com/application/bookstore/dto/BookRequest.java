@@ -47,6 +47,6 @@ public class BookRequest {
 
     @NotBlank(message = "Publisher is required")
     @JsonProperty("publisher")
-    @Schema(description = "Publisher of the book", example = "PENGUIN")
+    @Schema(description = "Publisher of the book", example = "PENGUIN_RANDOM_HOUSE")
     String publisher;
 }
