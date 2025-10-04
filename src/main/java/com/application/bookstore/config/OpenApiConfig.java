@@ -6,12 +6,21 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 
 @Configuration
 public class OpenApiConfig {
+
+    private static final String SWAGGER_SERVER_URL = "swagger.server.url";
+
+    @Value("${" + SWAGGER_SERVER_URL + "}")
+    private String swaggerServerUrl;
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -34,6 +43,7 @@ public class OpenApiConfig {
                                         .bearerFormat("JWT")
                         )
                 )
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .servers(List.of(new Server().url(swaggerServerUrl)));
     }
 }
