@@ -1,5 +1,15 @@
 # 📚 Bookstore API
 
+![Java](https://img.shields.io/badge/Java-21-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen)
+![Maven](https://img.shields.io/badge/Maven-3.11.0-C71A36)
+![MapStruct](https://img.shields.io/badge/MapStruct-1.5.5.Final-lightgrey)
+![Lombok](https://img.shields.io/badge/Lombok-1.18.32-yellowgreen)
+![Springdoc%20OpenAPI](https://img.shields.io/badge/OpenAPI-2.6.0-orange)
+![JWT](https://img.shields.io/badge/JJWT-0.11.5-yellow)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
+
 RESTful API for managing books, built with **Java 21 + Spring Boot 3**, featuring JWT authentication, **Swagger/OpenAPI** documentation, **Docker + PostgreSQL**.
 
 This project demonstrates **backend best practices** (DTO/Mapper layer, global exception handler, unit & integration testing, JWT security, environment profiles `dev`/`prod`) and serves as a professional portfolio reference.
@@ -121,6 +131,31 @@ docker-compose up --build
 ### 3. Stop containers
 ```bash
 docker-compose down
+```
+
+---
+
+## .env.example
+
+```bash
+# Database
+POSTGRES_DB=bookstore
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/bookstore
+
+# JPA
+JPA_DDL_AUTO=update
+JPA_SHOW_SQL=false
+
+# JWT
+JWT_SECRET=your-super-secret-key
+JWT_EXPIRATION=3600000
+```
+
+### 👉 Copy this file to .env and replace values as needed:
+```bash
+cp .env.example .env
 ```
 
 ---
