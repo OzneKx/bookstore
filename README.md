@@ -14,6 +14,8 @@ RESTful API for managing books, built with **Java 21 + Spring Boot 3**, featurin
 
 This project demonstrates **backend best practices** (DTO/Mapper layer, global exception handler, unit & integration testing, JWT security, environment profiles `dev`/`prod`) and serves as a professional portfolio reference.
 
+🚀 Live Demo: [Swagger UI – Bookstore API](https://bookstore-production-3904.up.railway.app/swagger-ui/index.html)
+
 ---
 
 ## Technologies Used
@@ -90,6 +92,8 @@ Content-Type: application/json
   "token": "eyJhbGciOiJIUzI1NiJ9..."
 }
 ```
+
+After logging in, copy the JWT token and click on the **Authorize** button to use the protected endpoints.
 
 ---
 
